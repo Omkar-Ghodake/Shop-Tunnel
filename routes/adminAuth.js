@@ -9,91 +9,91 @@ var jwt = require('jsonwebtoken');
 const JWT_SECRET = 'login@Chinu$1831';
 
 
-// Route 1: Creating admin
-router.post('/create-admin', [
-	body('name', 'Name Invalid.').isLength({ min: 4 }),
-	body('username', 'Username Invalid.').isLength({ min: 5 }),
-	body('password', 'Password Invalid.').isLength({ min: 5 })
-], async (req, res) => {
-	let success = false;
+// // Route 1: Creating admin
+// router.post('/create-admin', [
+// 	body('name', 'Name Invalid.').isLength({ min: 4 }),
+// 	body('username', 'Username Invalid.').isLength({ min: 5 }),
+// 	body('password', 'Password Invalid.').isLength({ min: 5 })
+// ], async (req, res) => {
+// 	let success = false;
 
-	const errors = validationResult(req);
+// 	const errors = validationResult(req);
 
-	if (!errors.isEmpty) {
-		res.status(400).json({ success, errors: errors.array() })
-	}
+// 	if (!errors.isEmpty) {
+// 		res.status(400).json({ success, errors: errors.array() })
+// 	}
 
-	try {
-		let admin = await Admin.findOne({ username: req.body.usermame });
-		if (admin) {
-			success = false;
-			res.status(400).json({ success, error: 'User already exists.' })
-		}
+// 	try {
+// 		let admin = await Admin.findOne({ username: req.body.usermame });
+// 		if (admin) {
+// 			success = false;
+// 			res.status(400).json({ success, error: 'User already exists.' })
+// 		}
 
-		// password hashing
-		const salt = await bcrypt.genSalt(10);
-		const hashedPassword = await bcrypt.hash(req.body.password, salt);
+// 		// password hashing
+// 		const salt = await bcrypt.genSalt(10);
+// 		const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-		admin = Admin.create({
-			name: req.body.name,
-			username: req.body.username,
-			password: hashedPassword
-		});
+// 		admin = Admin.create({
+// 			name: req.body.name,
+// 			username: req.body.username,
+// 			password: hashedPassword
+// 		});
 
-		//creating json web token
-		const payload = {
-			admin: { id: admin.id }
-		}
+// 		//creating json web token
+// 		const payload = {
+// 			admin: { id: admin.id }
+// 		}
 
-		const authToken = jwt.sign(payload, JWT_SECRET);
+// 		const authToken = jwt.sign(payload, JWT_SECRET);
 
-		success = true;
+// 		success = true;
 
-		res.json({ success, authToken });
-	} catch (error) {
-		res.status(400).json({ success, error: 'Could not create admin.' })
-	}
-})
+// 		res.json({ success, authToken });
+// 	} catch (error) {
+// 		res.status(400).json({ success, error: 'Could not create admin.' })
+// 	}
+// })
 
-// Route 2: Authorize
-router.post('/login', [
-	body('username', 'Username Invalid.').exists(),
-	body('password', 'Password Invalid.').exists()
-], async (req, res) => {
-	let success = false;
-	const errors = validationResult(req);
-	if (!errors.isEmpty()) {
-		return res.status(400).json({ success, errors: 'Invalid Credentials.' })
-	}
+// // Route 2: Authorize
+// router.post('/login', [
+// 	body('username', 'Username Invalid.').exists(),
+// 	body('password', 'Password Invalid.').exists()
+// ], async (req, res) => {
+// 	let success = false;
+// 	const errors = validationResult(req);
+// 	if (!errors.isEmpty()) {
+// 		return res.status(400).json({ success, errors: 'Invalid Credentials.' })
+// 	}
 
-	const { username, password } = req.body;
+// 	const { username, password } = req.body;
 
-	try {
-		let admin = await Admin.findOne({ username });
-		const passwordCompare = await bcrypt.compare(password, admin.password);
+// 	try {
+// 		let admin = await Admin.findOne({ username });
+// 		const passwordCompare = await bcrypt.compare(password, admin.password);
 
-		if (!admin) {
-			success = false;
-			res.status(400).json({ success, error: 'Could not find admin.' });
-		} else if (!passwordCompare) {
-			success = false;
-			res.status(400).json({ success, error: 'Invalid Password.' })
-		} else {
-			//creating json web token
-			const payload = {
-				admin: { id: admin.id }
-			}
-			const authToken = jwt.sign(payload, JWT_SECRET);
-			success = true;
-			res.json({ success, authToken });
-		}
+// 		if (!admin) {
+// 			success = false;
+// 			res.status(400).json({ success, error: 'Could not find admin.' });
+// 		} else if (!passwordCompare) {
+// 			success = false;
+// 			res.status(400).json({ success, error: 'Invalid Password.' })
+// 		} else {
+// 			//creating json web token
+// 			const payload = {
+// 				admin: { id: admin.id }
+// 			}
+// 			const authToken = jwt.sign(payload, JWT_SECRET);
+// 			success = true;
+// 			res.json({ success, authToken });
+// 		}
 
 
 
-	} catch (error) {
-		res.status(500).send('Internal Server Error.')
-	}
-});
+// 	} catch (error) {
+// 		res.status(500).send('Internal Server Error.')
+// 	}
+// });
 
 
 module.exports = router;

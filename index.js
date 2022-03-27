@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 connectToMongo();
 
 app.use(express.json());

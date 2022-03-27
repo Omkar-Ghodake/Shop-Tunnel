@@ -1,0 +1,17 @@
+.list-group {
+	font-size: small;
+}
+
+.delete-wishlist, .add-product {
+	font-size: 1rem;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+.delete-wishlist:hover, .add-product:hover {
+	border: 1px solid rgb(180, 178, 178);
+}
+
+.delete-wishlist:active, .add-product:active {
+	background-color: rgb(230, 228, 228);
+}

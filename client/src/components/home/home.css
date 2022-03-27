@@ -1,0 +1,13 @@
+.create-wishlist {
+	font-size: 1.3rem;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+.create-wishlist:hover {
+	border: 1px solid rgb(211, 210, 210);
+}
+
+.create-wishlist:active {
+	background-color: rgb(230, 228, 228);
+}

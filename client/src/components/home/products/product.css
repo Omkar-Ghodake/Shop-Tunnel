@@ -1,0 +1,17 @@
+.card-img-top {
+	height: 10rem;
+	width: 10rem;
+}
+
+.product-card {
+
+	height: 100%;
+}
+
+.fa-heart:hover {
+	background-color: rgb(226, 225, 225);
+}
+
+.fa-heart:active {
+	background-color: rgb(195, 195, 195);
+}

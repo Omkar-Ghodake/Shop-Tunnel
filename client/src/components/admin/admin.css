@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300&display=swap');
+
+.roboto {
+	font-family: 'Roboto Slab', serif;
+}
+
+.product-number {
+	width: 2rem;
+}
+
+.product-name {
+	width: 30rem;
+}
